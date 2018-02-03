@@ -7,7 +7,10 @@ Multichar_Symbols
 
 %>                   ! Граница морфемы
 %{A%}                ! Архифонема [а] или [е]
-%{Ӑ%}                ! Архифонема [ӑ] или [ӗ]
+%{AA%}               ! Архифонема [ӑ] или [ӗ]
+%{м%}                ! Архифонема м или 0
+%{Y%}                ! Архифонема у или ӳ
+%{Т%}                ! Архифонема т или ч
 
 LEXICON Root
 
@@ -18,16 +21,27 @@ LEXICON CASES
 %<nom%>: # ;
 %<dat%>:%>%{A%} # ;
 %<ins%>:%>п%{A%} # ;
+%<abl%>:%>р%{A%}н # ;
+%<loc%>:%>р%{A%} # ;
+%<loc%>:%>%{Т%}%{A%} # ;
+%<ter%>:%>ш%{AA%}н # ;
+%<gen%>:%>%{AA%}н # ;
+
+
 
 LEXICON PLURAL
 
-             CASES ;
-%<pl%>:%>сем CASES ;
+                 CASES ;
+%<pl%>:%>се%{м%} CASES ;
 
 LEXICON PERSON
 
                PLURAL ;
-%<px1sg%>:%>%{Ӑ%}м PLURAL ;
+%<px1sg%>:%>%{AA%}м PLURAL ;
+%<px1pl%>:%>%{AA%}м%{AA%}р PLURAL ;
+%<px2sg%>:%>%{Y%} PLURAL ;
+%<px2pl%>:%>%{AA%}р PLURAL ;
+%<px3sp%>:%>ӗ PLURAL ;
 
 LEXICON N 
 
@@ -35,7 +49,7 @@ LEXICON N
 
 LEXICON Nouns
 
-канаш:канаш N ; !  ???
+канаш:канаш N ; !  совет
 урам:урам N ;     ! "улица"
 пакча:пакча N ;   ! "сад"
 хула:хула N ;     ! "город"

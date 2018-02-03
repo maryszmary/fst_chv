@@ -2,25 +2,51 @@ Alphabet
   а ӑ е ё ӗ и о у ӳ ы э ю я б в г д ж з к л м н п р с ҫ т ф х ц ч ш щ й ь ъ
   А Ӑ Е Ё Ӗ И О У Ӳ Ы Э Ю Я Б В Г Д Ж З К Л М Н П Р С Ҫ Т Ф Х Ц Ч Ш Щ Й Ь Ъ 
  %{A%}:а %{A%}:е
- %{Ӑ%}:ӑ %{Ӑ%}:ӗ
-! %>%{A%}н
+ %{AA%}:ӑ %{AA%}:ӗ %{AA%}:0
+ %{м%}:м %{м%}:0
+ %{Y%}:у %{Y%}:ӳ
+ %{Т%}:т %{Т%}:ч
+ а:0
 ;
 
 Sets 
 
 BackVow = ӑ а ы о у я ё ю ;
 
-FrontVow = ӗ э и ӳ ; 
+FrontVow = ӗ э и е ӳ ;
 
-Cns = б в г д ж з к л м н п р с ҫ т ф х ц ч ш щ й ь ъ ; 
+Cns = б в г д ж з к л м н п р с ҫ т ф х ц ч ш щ й ь ъ ;
+
+ArchiCns = %{м%} ;
 
 Rules
 
 "Back vowel harmony for archiphoneme {A}"
-%{A%}:а <=> BackVow: [ Cns: | %>: ]+ _ ;
+%{A%}:а <=> [BackVow: | %{AA%}:ӑ | %{Y%}:у ] [ Cns: | %>: ]+ _ ;
 
-"Back vowel harmony for archiphoneme {Ӑ}"
-%{Ӑ%}:ӑ <=> BackVow: [ Cns: | %>: ]+ _ ;
+"Back vowel harmony for archiphoneme {Y}"
+%{Y%}:у <=> [BackVow: | %{A%}:а | %{Y%}:у ] [ Cns: | %>: ]+ _ ;
+
+"Back vowel harmony for archiphoneme {AA}"
+%{AA%}:ӑ <=> [BackVow: | %{AA%}:ӑ | %{A%}:а ] [ ArchiCns: | Cns: | %>: ]+ _ ;
+        except
+                                     %{м%}: %>:  _ н ;
+                                     [ BackVow: | FrontVow: ] %>:  _ ;
+
+"Non surface {AA} in plural genitive"
+%{AA%}:0 <=> %{м%}: %>: _ н ;
+
+"Non surface {AA} after vowels in genitive"
+%{AA%}:0 <=> [ BackVow: | FrontVow: | %{Y%}: ] %>: _ ;
+
+"Non surface а vowels before {Y}? "
+а:0 <=> _ %>: %{Y%}: ;
+
+"Non surface {м} before н in genitive"
+%{м%}:0 <=> е:е _ %>: %{AA%}:0 н ;
+
+"The rule for че after сен"
+%{Т%}:т <=> %{м%}: %>: _ ;
 
 "Remove morpheme boundary"
 %>:0 <=> _ ;
